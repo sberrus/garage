@@ -1,64 +1,49 @@
-import { useEffect } from "react";
+import React, { useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+
 import { Container } from "react-bootstrap";
-import * as THREE from "three";
 
 //Loader de STL
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 //Orbitador
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+function Box(props) {
+	// This reference will give us direct access to the mesh
+	const mesh = useRef();
+	// Set up state for the hovered and active state
+	const [hovered, setHover] = useState(false);
+	const [active, setActive] = useState(false);
+	// Subscribe this component to the render-loop, rotate the mesh every frame
+	useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+	// Return view, these are regular three.js elements expressed in JSX
+	return (
+		<mesh
+			{...props}
+			ref={mesh}
+			scale={active ? 3 : 1}
+			onClick={(event) => {
+				alert("Que has tocado niño?");
+				setActive(!active);
+			}}
+			onPointerOver={(event) => setHover(true)}
+			onPointerOut={(event) => setHover(false)}
+		>
+			<boxGeometry args={[1, 1, 1]} />
+			<meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+		</mesh>
+	);
+}
+
 const Three = () => {
-	useEffect(() => {
-		//Aquí almacenaremos al modelo ya cargado para que pueda ser usado en la escena
-		let object: any;
-
-		const importModel = () => {
-			//Configuración básica de Threejs, de la camara y la escena.
-			const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 10000);
-			//Alejamos la cámara para poder visualizar correctamente el modelo
-			camera.position.z = 10;
-
-			const scene = new THREE.Scene();
-
-			scene.background = new THREE.Color("#000");
-
-			const renderer = new THREE.WebGLRenderer();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			document.body.appendChild(renderer.domElement);
-
-			//Incorporamos el modelo a la escena
-			scene.add(object);
-			//Renderizamos la escena y la camara
-			renderer.render(scene, camera);
-		};
-
-		//Instanciamos el STLLoader para poder usar el modelo
-		let loader = new STLLoader();
-
-		/**
-		 * Con el loader lo cargamos para usarlo.
-		 * El loader tiene un método load que nos permite indicar donde esta el modelo y le enviamos un callback que
-		 * tiene el modelo como argumento.
-		 */
-		loader.load("../assets/models/sberrus.stl", (model) => {
-			//Asignamos un material al modelo
-			object = new THREE.Mesh(model, new THREE.MeshLambertMaterial({ color: 0x00ff00 }));
-
-			// Los STL Suelen tener unas dimensiones grandes y dependiendo del desarrollador unas posiciones dispersas.
-			// Para evitar problemas reseteamos la escala y la posición del modelo para centrarlo en la pantalla.
-			object.scale.set(0.1, 0.2, 0.2);
-			object.position.set(0, 0, 0);
-
-			//Al finalizar de cargar el modelo, inicializamos el canva para que este lo muestre.
-			importModel();
-		});
-
-		return () => {};
-	}, []);
-
 	return (
 		<Container>
-			<h1>Three js tls import</h1>
+			<Canvas>
+				<ambientLight />
+				<pointLight position={[10, 10, 10]} />
+				<Box position={[-1.2, 0, 0]} />
+				<Box position={[1.2, 0, 0]} />
+			</Canvas>
 		</Container>
 	);
 };
