@@ -5,6 +5,7 @@ import IndexLayout from "../components/Layouts/IndexLayout";
 //Pages
 import Index from "../pages/Index/Index";
 import Three from "../pages/Three/Three";
+import Librerias from "../pages/Librerias/Librerias";
 
 const RouterComponent = () => {
 	return (
@@ -13,6 +14,7 @@ const RouterComponent = () => {
 				<Route index element={<Index />} />
 				<Route path="three" element={<Three />} />
 				<Route path="librerias">
+					<Route index element={<Librerias />} />
 					<Route path="three" element={<Three />} />
 				</Route>
 				<Route path="teoria">
