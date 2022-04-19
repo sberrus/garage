@@ -13,7 +13,7 @@ const Librerias = () => {
 						<Card.Body>
 							<Card.Title>Threejs</Card.Title>
 							<Card.Text style={{ minHeight: "50px" }}>Insertando modelos 3d en aplicaciones web.</Card.Text>
-							<Link className="btn btn-outline-primary" to="librerias">
+							<Link className="btn btn-outline-primary" to="three">
 								Ir a Threejs
 							</Link>
 						</Card.Body>
