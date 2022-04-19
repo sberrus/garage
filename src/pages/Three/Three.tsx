@@ -22,10 +22,7 @@ function Box(props) {
 			{...props}
 			ref={mesh}
 			scale={active ? 3 : 1}
-			onClick={(event) => {
-				alert("Que has tocado niño?");
-				setActive(!active);
-			}}
+			onClick={(event) => setActive(!active)}
 			onPointerOver={(event) => setHover(true)}
 			onPointerOut={(event) => setHover(false)}
 		>
