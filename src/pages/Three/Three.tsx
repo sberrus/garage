@@ -1,46 +1,38 @@
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 
 import { Container } from "react-bootstrap";
 
-//Loader de STL
-import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-//Orbitador
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
-function Box(props) {
-	// This reference will give us direct access to the mesh
-	const mesh = useRef();
-	// Set up state for the hovered and active state
-	const [hovered, setHover] = useState(false);
-	const [active, setActive] = useState(false);
-	// Subscribe this component to the render-loop, rotate the mesh every frame
-	useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
-	// Return view, these are regular three.js elements expressed in JSX
-	return (
-		<mesh
-			{...props}
-			ref={mesh}
-			scale={active ? 3 : 1}
-			onClick={(event) => setActive(!active)}
-			onPointerOver={(event) => setHover(true)}
-			onPointerOut={(event) => setHover(false)}
-		>
-			<boxGeometry args={[1, 1, 1]} />
-			<meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-		</mesh>
-	);
-}
+// //Loader de STL
+// import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
+// //Orbitador
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import BoxMesh from "./components/BoxMesh";
 
 const Three = () => {
 	return (
 		<Container>
+			<h1>Usando Libreria Fiber-Three</h1>
+			<p>
+				La libreria <b>Fiber-Three</b> es una libreria múy útil que nos permite utilizar de forma más eficiente
+				modelos 3d en react.
+			</p>
+			<h2>Crenado objetos 3d manualmente</h2>
+			{/* El componente canvas es el que nos permite inicializar la "escene" y la "camera" de threjs de manera sencilla*/}
 			<Canvas>
+				{/* 
+					Dentro de cada componente tenemos estas etiquetas especiales de Fiber-three que como puede verse empiezan en minusculas
+					ya que de cierto modo podriamos verlos como etiquetas JSX especiales de Three-Fiber pudiendo también pasarle a estas
+					diferentes props y atributos especiales.
+				*/}
 				<ambientLight />
 				<pointLight position={[10, 10, 10]} />
-				<Box position={[-1.2, 0, 0]} />
-				<Box position={[1.2, 0, 0]} />
+
+				{/* Ir al componente para ver más detalles del mismo */}
+				<BoxMesh position={[-1.2, 0, 0]} />
+				<BoxMesh position={[1.2, 0, 0]} />
 			</Canvas>
+			<h2>Utilizando modelos 3d de otros formatos (GLTF, TSL, etc...)</h2>
+			<Canvas></Canvas>
 		</Container>
 	);
 };
