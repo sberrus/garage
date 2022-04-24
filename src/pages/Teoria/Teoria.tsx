@@ -1,6 +1,6 @@
 import { Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ModelImg from "../../assets/img/3dModel.svg";
+import CleanImg from "../../assets/img/clean-architecture.jpg";
 const Teoria = () => {
 	return (
 		<>
@@ -9,7 +9,7 @@ const Teoria = () => {
 			<Row>
 				<Col md={6}>
 					<Card className="p-5 px-3 text-center">
-						<Card.Img variant="top" src={ModelImg} style={{ height: "150px", margin: "auto" }} />
+						<Card.Img variant="top" src={CleanImg} style={{ height: "200px", width: "auto", margin: "auto" }} />
 						<Card.Body>
 							<Card.Title>Arquitectura Clean</Card.Title>
 							<Card.Text style={{ minHeight: "50px" }}>
