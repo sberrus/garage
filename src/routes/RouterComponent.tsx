@@ -1,11 +1,13 @@
 //Libraries
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 //Layouts
 import IndexLayout from "../components/Layouts/IndexLayout";
 //Pages
 import Index from "../pages/Index/Index";
 import Three from "../pages/Three/Three";
 import Librerias from "../pages/Librerias/Librerias";
+import Teoria from "../pages/Teoria/Teoria";
+import CleanCode from "../pages/CleanCode/CleanCode";
 
 const RouterComponent = () => {
 	return (
@@ -18,26 +20,8 @@ const RouterComponent = () => {
 					<Route path="three" element={<Three />} />
 				</Route>
 				<Route path="teoria">
-					<Route
-						index
-						element={
-							<>
-								<ul>
-									<li>
-										<Link to="clean">clean</Link>
-									</li>
-								</ul>
-							</>
-						}
-					/>
-					<Route
-						path="clean"
-						element={
-							<>
-								<h1>Arquitectura</h1>
-							</>
-						}
-					/>
+					<Route index element={<Teoria />} />
+					<Route path="clean-code" element={<CleanCode />} />
 				</Route>
 			</Route>
 		</Routes>
