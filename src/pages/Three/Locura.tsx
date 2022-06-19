@@ -1,21 +1,22 @@
 import React, { useRef } from "react";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
 const Locura = (props: any) => {
-  const obj = useLoader(OBJLoader, "/components/Work2.obj");
-  const matcap = useLoader(
-    TextureLoader,
-    "/components/PavingStones092_1K_Normal.jpg"
-  );
+  const mtlUrl = "/components/hola.mtl";
+  const objUrl = "/components/hola.obj";
+  const materials = useLoader(MTLLoader, mtlUrl);
+  const object = useLoader(OBJLoader, objUrl, (loader) => {
+    materials.preload();
+    loader.setMaterials(materials);
+  });
 
   return (
     <>
       <ambientLight intensity={0.1} />
       <directionalLight />
-      <primitive object={obj} />
-      <meshMatcapMaterial matcap={matcap}  />
+      <primitive object={object} />
     </>
   );
 };

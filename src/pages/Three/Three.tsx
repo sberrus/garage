@@ -1,15 +1,10 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
-
 import { Container } from "react-bootstrap";
-
-// //Loader de STL
-// import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-// //Orbitador
-// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import BoxMesh from "./components/BoxMesh";
 import Locura from "./Locura";
+import LocuraGLTF from "./LocuraGLTF";
 
 const Three = () => {
   return (
@@ -36,10 +31,13 @@ const Three = () => {
       </Canvas>
       <h2>Utilizando modelos 3d de otros formatos (GLTF, TSL, etc...)</h2>
       {/* Importando modelo OBJ */}
-      <div style={{ height: "100vh" }}>
-        <Canvas>
+
+      <div style={{ height: "100vh", width: "100%" }}>
+        <Canvas camera={{ zoom: 1, position: [7.5, 3, 8] }}>
+          <pointLight position={[35, 0, 35]} intensity={0.15} />
           <Suspense fallback={null}>
             <Locura />
+            {/* <LocuraGLTF /> */}
           </Suspense>
           <OrbitControls />
         </Canvas>
